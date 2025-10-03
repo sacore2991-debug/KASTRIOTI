@@ -108,26 +108,6 @@ const POPULAR_FACTS = {
 };
 
 
-// --- ADSENSE/GA CONSTANTS ---
-const ADS_TXT_CONTENT = `
-google.com, ca-pub-7640821707333201, DIRECT, f08c47fec0942fa0
-`;
-const ADSENSE_SCRIPT = `
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7640821707333201"
-        crossorigin="anonymous"></script>
-`;
-const GOOGLE_ANALYTICS_SCRIPT = `
-    <!-- Google tag (gtag.js) -->
-    <script async src="//www.googletagmanager.com/gtag/js?id=G-CYY1C48VQD"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-CYY1C48VQD');
-    </script>
-`;
-
 // --- Shared CSS for a modern, elegant look (Red/Black/Gold Theme) ---
 const BASE_CSS = `
     /* Load EB Garamond (classical) and Inter (UI) */
@@ -552,8 +532,6 @@ function generateLandingPageHTML() {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${SITE_NAME}</title>
-            ${ADSENSE_SCRIPT}
-            ${GOOGLE_ANALYTICS_SCRIPT}
             <style>
                 ${BASE_CSS}
                 /* Landing specific style overrides */
@@ -605,7 +583,6 @@ function generatePeriodPageHTML(periodId, periodData) {
     const period = parseInt(periodId);
 
     // Construct the main title
-    const mainTitle = `Timeline Period ${period}`;
     const displayTitle = periodData.title;
     
     // Construct the title for the <head> tag
@@ -651,8 +628,6 @@ function generatePeriodPageHTML(periodId, periodData) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${headTitle} - ${SITE_NAME}</title>
-            ${ADSENSE_SCRIPT}
-            ${GOOGLE_ANALYTICS_SCRIPT}
             <style>
                 ${BASE_CSS}
                 .period-content-card {
@@ -703,8 +678,6 @@ function generateSimpleContentPage(pageTitle, contentHtml, statusCode = 200) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${title}</title>
-            ${ADSENSE_SCRIPT}
-            ${GOOGLE_ANALYTICS_SCRIPT}
             <style>
                 ${BASE_CSS}
                 .simple-content-card {
@@ -751,19 +724,12 @@ export default {
         let htmlContent;
         let status = 200;
 
-        // 1. ADS.TXT Logic
-        if (pathname === 'ads.txt') {
-            return new Response(ADS_TXT_CONTENT.trim(), {
-                headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-            });
-        }
-
-        // 2. Landing Page Logic
+        // 1. Landing Page Logic
         if (pathname === '' || pathname === 'index.html') {
             htmlContent = generateLandingPageHTML();
         } 
         
-        // 3. Simple Static Pages Logic
+        // 2. Simple Static Pages Logic
         else if (pathname === 'privacy' || pathname === 'about' || pathname === 'contact') {
             let pageTitle = '';
             let contentHtml = '';
@@ -771,8 +737,8 @@ export default {
             if (pathname === 'privacy') {
                 pageTitle = 'Privacy Policy';
                 contentHtml = `
-                    <p>This website respects your privacy. We use Google Analytics to monitor traffic and Google AdSense for monetization.</p>
-                    <p>No personal data is collected by us directly. All content is freely accessible. We do not store or share any user-specific information. For details on how Google uses data, please refer to their Privacy & Terms policies.</p>
+                    <p>This website respects your privacy. No user tracking is performed by us. All content is freely accessible.</p>
+                    <p>No personal data is collected, stored, or shared by this service.</p>
                     <p><strong>Last updated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
                 `;
             } else if (pathname === 'about') {
@@ -792,7 +758,7 @@ export default {
             htmlContent = generateSimpleContentPage(pageTitle, contentHtml);
         }
 
-        // 4. Routing Logic for Timeline Periods: /timeline/{id}
+        // 3. Routing Logic for Timeline Periods: /timeline/{id}
         else if (pathname.startsWith('timeline/')) {
             const parts = pathname.split('/').filter(Boolean);
             
@@ -815,7 +781,7 @@ export default {
             }
         }
         
-        // 5. Default 404 for unknown paths
+        // 4. Default 404 for unknown paths
         else {
             status = 404;
             htmlContent = generateSimpleContentPage('404 Not Found', `<p>The page you requested could not be found on KingKastrioti.com. Please return to the <a href="/">homepage</a>.</p>`, 404);
