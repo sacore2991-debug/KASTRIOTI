@@ -1,0 +1,8 @@
+name = "sirach-dynamic-worker" # Your project name
+main = "index.js"             # Entry file for your Worker
+compatibility_date = "2025-09-29" # Set to the current date or later
+# The worker uses the ES module format (import/export)
+[build]
+command = "echo 'Build complete'" # Simple echo command, as there's no complex build step
+[build.upload]
+format = "modules"
