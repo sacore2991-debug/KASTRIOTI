@@ -3,8 +3,8 @@ const SITE_NAME = "King Kastrioti: The Albanian Legend";
 const SUBTITLE = "The Life and Legacy of Gjergj Kastrioti (Skanderbeg)";
 const MAX_PERIOD = 5; // Total number of key timeline periods
 
-// Placeholder URL for a historical image (The Albanian Eagle Flag)
-const LANDING_IMAGE_URL = 'https://placehold.co/1920x1080/222222/D4AF37?text=Skanderbeg+Banner';
+// Updated URL for the historical background image
+const LANDING_IMAGE_URL = 'https://images.kingkastrioti.com/KINGKASTRIOTI1.png';
 
 // --- Google Analytics Tag ---
 const GOOGLE_ANALYTICS_SCRIPT = `
@@ -149,7 +149,7 @@ const BASE_CSS = `
         min-height: 100vh;
         scroll-behavior: smooth;
         
-        /* Global Background Image with dark overlay for a heroic feel */
+        /* Global Background Image using the user's provided image, with a dark overlay for a heroic feel and readability */
         background-color: var(--primary-text);
         background-image: linear-gradient(rgba(34, 34, 34, 0.9), rgba(34, 34, 34, 0.9)), url('${LANDING_IMAGE_URL}');
         background-size: cover;
