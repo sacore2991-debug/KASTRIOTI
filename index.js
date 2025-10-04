@@ -3,8 +3,6 @@ const SITE_NAME = "King Kastrioti: The Albanian Legend";
 const SUBTITLE = "The Life and Legacy of Gjergj Kastrioti (Skanderbeg)";
 const MAX_PERIOD = 5; // Total number of key timeline periods
 
-// Placeholder URL for a historical image (The Albanian Eagle Flag)
-const LANDING_IMAGE_URL = 'https://placehold.co/1920x1080/222222/D4AF37?text=Skanderbeg+Banner';
 // Updated URL for the historical background image
 const LANDING_IMAGE_URL = 'https://images.kingkastrioti.com/KINGKASTRIOTI1.png';
 
@@ -151,7 +149,6 @@ const BASE_CSS = `
         min-height: 100vh;
         scroll-behavior: smooth;
         
-        /* Global Background Image with dark overlay for a heroic feel */
         /* Global Background Image using the user's provided image, with a dark overlay for a heroic feel and readability */
         background-color: var(--primary-text);
         background-image: linear-gradient(rgba(34, 34, 34, 0.9), rgba(34, 34, 34, 0.9)), url('${LANDING_IMAGE_URL}');
@@ -537,7 +534,7 @@ function generateLandingPageHTML() {
             </div>
         `;
     }
-
+    
     // Generate the timeline grid
     const timelineGrid = generateTimelineGridHtml();
 
@@ -601,12 +598,12 @@ function generatePeriodPageHTML(periodId, periodData) {
 
     // Construct the main title
     const displayTitle = periodData.title;
-
+    
     // Construct the title for the <head> tag
     const headTitle = periodData.title;
-
+    
     let contentHtml = '';
-
+    
     // Calculate navigation links
     const prevPeriod = period > 1 ? period - 1 : null;
     const nextPeriod = period < MAX_PERIOD ? period + 1 : null;
@@ -624,7 +621,7 @@ function generatePeriodPageHTML(periodId, periodData) {
             </a>
         </div>
     `;
-
+    
     // Check if the period data is valid and has content
     if (periodData && periodData.content && periodData.content.length > 0) {
         periodData.content.forEach((paragraph, index) => {
@@ -688,7 +685,7 @@ function generatePeriodPageHTML(periodId, periodData) {
  */
 function generateSimpleContentPage(pageTitle, contentHtml, statusCode = 200) {
     const title = `${pageTitle} - ${SITE_NAME}`;
-
+    
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -736,10 +733,10 @@ function generateSimpleContentPage(pageTitle, contentHtml, statusCode = 200) {
 export default {
     async fetch(request, env, ctx) {
         const url = new URL(request.url);
-
+        
         // Remove leading/trailing slashes for easier path processing
         const pathname = url.pathname.replace(/^\/|\/$/g, ''); 
-
+        
         let htmlContent;
         let status = 200;
 
@@ -747,7 +744,7 @@ export default {
         if (pathname === '' || pathname === 'index.html') {
             htmlContent = generateLandingPageHTML();
         } 
-
+        
         // 2. Simple Static Pages Logic
         else if (pathname === 'privacy' || pathname === 'about' || pathname === 'contact') {
             let pageTitle = '';
@@ -780,7 +777,7 @@ export default {
         // 3. Routing Logic for Timeline Periods: /timeline/{id}
         else if (pathname.startsWith('timeline/')) {
             const parts = pathname.split('/').filter(Boolean);
-
+            
             if (parts.length === 2 && parts[0] === 'timeline') {
                 const periodId = parseInt(parts[1]);
                 const periodData = TIMELINE_DATA[periodId];
@@ -799,7 +796,7 @@ export default {
                 htmlContent = generateSimpleContentPage('404 Not Found', `<p>Invalid URL format for the timeline. Please specify a period ID, or visit the <a href="/">homepage</a>.</p>`, 404);
             }
         }
-
+        
         // 4. Default 404 for unknown paths
         else {
             status = 404;
