@@ -4,7 +4,20 @@ const SUBTITLE = "The Life and Legacy of Gjergj Kastrioti (Skanderbeg)";
 const MAX_PERIOD = 5; // Total number of key timeline periods
 
 // Placeholder URL for a historical image (The Albanian Eagle Flag)
-const LANDING_IMAGE_URL = 'https://images.kingkastrioti.com/albanian_eagle_flag.jpg';
+const LANDING_IMAGE_URL = 'https://placehold.co/1920x1080/222222/D4AF37?text=Skanderbeg+Banner';
+
+// --- Google Analytics Tag ---
+const GOOGLE_ANALYTICS_SCRIPT = `
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RBLH0M8Q2L"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RBLH0M8Q2L');
+    </script>
+`;
 
 // Historical Timeline Data (Replacing SIRACH_TEXT and SIRACH_TITLES)
 const TIMELINE_DATA = {
@@ -532,6 +545,7 @@ function generateLandingPageHTML() {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${SITE_NAME}</title>
+            ${GOOGLE_ANALYTICS_SCRIPT} <!-- Google Analytics Code Injected Here -->
             <style>
                 ${BASE_CSS}
                 /* Landing specific style overrides */
@@ -628,6 +642,7 @@ function generatePeriodPageHTML(periodId, periodData) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${headTitle} - ${SITE_NAME}</title>
+            ${GOOGLE_ANALYTICS_SCRIPT} <!-- Google Analytics Code Injected Here -->
             <style>
                 ${BASE_CSS}
                 .period-content-card {
@@ -678,6 +693,7 @@ function generateSimpleContentPage(pageTitle, contentHtml, statusCode = 200) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${title}</title>
+            ${GOOGLE_ANALYTICS_SCRIPT} <!-- Google Analytics Code Injected Here -->
             <style>
                 ${BASE_CSS}
                 .simple-content-card {
